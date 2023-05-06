@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "./Book.module.css";
 
+
 interface data {
   book: any;
-  bookShelfHandler:any;
+  bookShelfHandler?:any;
 }
 
 const Book = ({ book, bookShelfHandler }: data) => {
-  console.log();
 
   return (
     <div className={`${styles.book}`}>
@@ -17,7 +17,7 @@ const Book = ({ book, bookShelfHandler }: data) => {
           style={{
             width: 128,
             height: 193,
-            backgroundImage: `url(${book.url})`,  
+            backgroundImage: `url(${book.imageLinks.smallThumbnail || book.imageLinks.thumbnail})`,  
           }}
         ></div>
         <div className={`${styles.bookShelfChanger}`}>

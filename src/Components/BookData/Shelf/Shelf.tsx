@@ -1,7 +1,5 @@
-// import React, { useEffect, useState } from 'react'
 import styles from "./Shelf.module.css";
 import Book from "../Book/Book";
-// import * as booksApi from '../../../BooksAPI'
 
 interface data {
   sectionName: string;
@@ -10,8 +8,6 @@ interface data {
 }
 
 const Shelf = ({ sectionName, books, bookShelfHandler }: data) => {
-  // console.log(books);
-  
   return (
     <div className={`${styles.bookshelf}`}>
       <h2 className={`${styles.bookshelfTitle}`}>{sectionName}</h2>

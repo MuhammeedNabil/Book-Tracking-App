@@ -1,30 +1,79 @@
-import React from 'react'
-import styles from './SearchPage.module.css'
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import styles from "./SearchPage.module.css";
+import { Link } from "react-router-dom";
+import * as booksAPI from "../../../BooksAPI";
+import Book from "../../BookData/Book/Book";
 
-
-const SearchPage = () => {
-  return (
-    <div className={`${styles.searchBooks}`}>
-    <div className={`${styles.searchBooksBar}`}>
-      <Link
-        className={`${styles.closeSearch}`}
-        to={'/'}
-      >
-        Close
-      </Link>
-      <div className={`${styles.searchBooksInputWrapper}`}>
-        <input
-          type="text"
-          placeholder="Search by title, author, or ISBN"
-        />
-      </div>
-    </div>
-    <div className={`${styles.searchBooksResults}`}>
-      <ol className={`${styles.booksGrid}`}></ol>
-    </div>
-  </div>
-  )
+interface bookData {
+  url: string;
+  title: string;
+  authors: string;
+  shelf: string;
+  id: number;
 }
 
-export default SearchPage
+const SearchPage = () => {
+  const [query, setQuery] = useState("");
+  const [foundedBooks, setFoundedBooks] = useState([]);
+
+  useEffect(() => {
+    let isAllNameIsGet = true;
+    if (query) {
+      booksAPI.search(query).then((data) => {
+        if (data.error) {
+          setFoundedBooks([]);
+        } else {
+          if (isAllNameIsGet) {
+            setFoundedBooks(data);
+          }
+        }
+      });
+    }
+    return () => {
+      isAllNameIsGet = false;
+      setFoundedBooks([]);
+    };
+  }, [query]);
+
+  // ---------------------Handler function to update the shelf of the book-------------------
+  const bookShelfHandler = (book: bookData, whichShelf: string) => {
+    const updatedBooks: any = foundedBooks.map((b: bookData) => {
+      if (b.id === book.id) {
+        book.shelf = whichShelf;
+        return book;
+      }
+      return b;
+    });
+    setFoundedBooks(updatedBooks);
+    booksAPI.update(book, whichShelf).then((data) => data);
+  };
+  // ---------------------------------------------------------------------------------------
+  return (
+    <div className={`${styles.searchBooks}`}>
+      <div className={`${styles.searchBooksBar}`}>
+        <Link className={`${styles.closeSearch}`} to={"/"}>
+          Close
+        </Link>
+        <div className={`${styles.searchBooksInputWrapper}`}>
+          <input
+            type="text"
+            placeholder="Search by title, author, or ISBN"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className={`${styles.searchBooksResults}`}>
+        <ol className={`${styles.booksGrid}`}>
+          {foundedBooks.map((b: any) => (
+            <li key={b.id}>
+              <Book book={b} bookShelfHandler={bookShelfHandler} />
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  );
+};
+
+export default SearchPage;

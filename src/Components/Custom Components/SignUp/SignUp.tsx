@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Button from "../../Custom Components/Button/Button";
-import Card from "../../Custom Components/Card/Card";
+import Button from "../Button/Button";
+import Card from "../Card/Card";
 import { Link } from "react-router-dom";
 
 interface userData {
@@ -25,7 +25,7 @@ const SignUp = () => {
         <div className="p-5 text-white">
           {/* Form Title */}
           <div className="text-center fw-bold fs-4 text-decoration-underline">
-            <strong>Sign Up</strong>
+            <strong>Register</strong>
           </div>
           <form action="">
             {/* First Name Input */}

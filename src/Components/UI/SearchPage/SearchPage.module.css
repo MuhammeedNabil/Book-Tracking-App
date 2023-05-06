@@ -38,3 +38,18 @@
   .searchBooksResults {
     padding: 80px 10px 20px;
   }
+
+  /* books grid */
+
+.booksGrid {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.booksGrid li {
+  padding: 10px 15px;
+  text-align: left;
+}
