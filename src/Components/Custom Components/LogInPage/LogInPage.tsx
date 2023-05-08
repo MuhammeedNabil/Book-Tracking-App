@@ -31,8 +31,8 @@ const LogInPage = () => {
             />
             {/* Buttons */}
             <div className="text-center">
-              <Link to={'/'}><Button className='me-2 px-5 mt-3'>login</Button></Link>
-              <p className="mt-2 text-center">Don't have account <Link  to={'/signup'}>Register</Link></p>
+              <Link data-testid='toHome' to={'/'}><Button className='me-2 px-5 mt-3'>login</Button></Link>
+              <p className="mt-2 text-center">Don't have account <Link data-testid='tosignup' to={'/signup'}>Register</Link></p>
             </div>
           </form>
         </div>

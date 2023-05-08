@@ -8,8 +8,7 @@ import * as booksAPI from "../../../BooksAPI";
 import Button from "../../Custom Components/Button/Button";
 import Card from "../../Custom Components/Card/Card";
 
-interface bookData {
-  url: string;
+ export interface bookData {
   title: string;
   authors: string;
   shelf: string;
@@ -17,17 +16,17 @@ interface bookData {
 }
 
 const Home = () => {
-  const [books, setBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [books, setBooks] = useState<bookData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     booksAPI.getAll().then((data) => setBooks(data));
-    setIsLoading(true);
+    setIsLoading(false);
   }, []);
 
   // ---------------------Handler function to update the shelf of the book-------------------
   const bookShelfHandler = (book: bookData, whichShelf: string) => {
-    const updatedBooks: any = books.map((b: bookData) => {
+    const updatedBooks: bookData[] = books.map((b: bookData) => {
       if (b.id === book.id) {
         book.shelf = whichShelf;
         return book;
@@ -41,22 +40,21 @@ const Home = () => {
 
   // --------------------------Filter the books on thier shelf----------------------------
   const currentlyReading = books.filter(
-    (book: any) => book.shelf === "currentlyReading"
+    (book: bookData) => book.shelf === "currentlyReading"
   );
-  const wantToRead = books.filter((book: any) => book.shelf === "wantToRead");
-  const read = books.filter((book: any) => book.shelf === "read");
+  const wantToRead = books.filter((book: bookData) => book.shelf === "wantToRead");
+  const read = books.filter((book: bookData) => book.shelf === "read");
   // ------------------------------------------------------------------------------------ //
   return (
     <div className={`${styles.app}`}>
       <div className={`${styles.listBooks}`}>
         <div className={`${styles.listBooksTitle} d-flex`}>
-          <h1 className="text-center w-100 ms-5">MyReads</h1>
-          <Link to={"/login"} className="text-end me-3 mt-2">
+          <h1 data-testid='homeTitle' className="text-center w-100 ms-5">MyReads</h1>
+          <Link data-testid='loginLink' to={"/login"} className="text-end me-3 mt-2">
             <Button className="px-4">Login</Button>
           </Link>
         </div>
-
-        {isLoading ? (
+        {!isLoading ? 
           <div className={`${styles.listBooksContent}`}>
             <div>
               <Shelf
@@ -76,14 +74,14 @@ const Home = () => {
               />
             </div>
           </div>
-        ) : (
+         : (
           <Card>
             <p className="text-white text-center">Loading.....</p>
           </Card>
         )}
 
         <div className={`${styles.openSearch}`}>
-          <Link to={"/search"}>Add a book</Link>
+          <Link data-testid='goToSearch' to={"/search"}>Add a book</Link>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Book.module.css";
-
+import { bookData } from '../../UI//Home/Home'
 
 interface data {
   book: any;

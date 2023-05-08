@@ -70,7 +70,7 @@ const SignUp = () => {
             />
             {/* Buttons */}
             <div className="text-center">
-              <Link to={"/login"}>
+              <Link data-testid='goToLogin' to={"/login"}>
                 <Button className="px-5 mt-3">login</Button>
               </Link>
             </div>

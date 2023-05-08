@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home/Home";
 import SearchPage from "./SearchPage/SearchPage";
-import Description from "./Description/Description";
 
 // Bouns Components Import
 import SignUp from "../Custom Components/SignUp/SignUp";
@@ -19,7 +18,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="Search" element={<SearchPage />} />
           <Route path="*" element={<Notfound />} />
-          <Route path="book-detailes" element={<Description />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -5,7 +5,6 @@ import * as booksAPI from "../../../BooksAPI";
 import Book from "../../BookData/Book/Book";
 
 interface bookData {
-  url: string;
   title: string;
   authors: string;
   shelf: string;
@@ -14,7 +13,7 @@ interface bookData {
 
 const SearchPage = () => {
   const [query, setQuery] = useState("");
-  const [foundedBooks, setFoundedBooks] = useState([]);
+  const [foundedBooks, setFoundedBooks] = useState<bookData[]>([]);
 
   useEffect(() => {
     let isAllNameIsGet = true;
@@ -37,7 +36,7 @@ const SearchPage = () => {
 
   // ---------------------Handler function to update the shelf of the book-------------------
   const bookShelfHandler = (book: bookData, whichShelf: string) => {
-    const updatedBooks: any = foundedBooks.map((b: bookData) => {
+    const updatedBooks: bookData[] = foundedBooks.map((b: bookData) => {
       if (b.id === book.id) {
         book.shelf = whichShelf;
         return book;
@@ -51,11 +50,12 @@ const SearchPage = () => {
   return (
     <div className={`${styles.searchBooks}`}>
       <div className={`${styles.searchBooksBar}`}>
-        <Link className={`${styles.closeSearch}`} to={"/"}>
+        <Link data-testid='goToHome' className={`${styles.closeSearch}`} to={"/"}>
           Close
         </Link>
         <div className={`${styles.searchBooksInputWrapper}`}>
           <input
+          data-testid='searchInput'
             type="text"
             placeholder="Search by title, author, or ISBN"
             value={query}
@@ -65,7 +65,7 @@ const SearchPage = () => {
       </div>
       <div className={`${styles.searchBooksResults}`}>
         <ol className={`${styles.booksGrid}`}>
-          {foundedBooks.map((b: any) => (
+          {foundedBooks.map((b: bookData) => (
             <li key={b.id}>
               <Book book={b} bookShelfHandler={bookShelfHandler} />
             </li>
