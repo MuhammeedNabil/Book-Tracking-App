@@ -1,14 +1,16 @@
 import React from "react";
 import styles from "./Book.module.css";
-import { bookData } from '../../UI//Home/Home'
+
+
 
 interface data {
-  book: any;
+  book?: any;
   bookShelfHandler?:any;
 }
 
 const Book = ({ book, bookShelfHandler }: data) => {
 
+console.log(book)
   return (
     <div className={`${styles.book}`}>
       <div className={`${styles.bookTop}`}>
@@ -17,11 +19,11 @@ const Book = ({ book, bookShelfHandler }: data) => {
           style={{
             width: 128,
             height: 193,
-            backgroundImage: `url(${book.imageLinks.smallThumbnail || book.imageLinks.thumbnail})`,  
+            backgroundImage: `url(${book?.imageLinks.smallThumbnail})`,  
           }}
         ></div>
         <div className={`${styles.bookShelfChanger}`}>
-          <select defaultValue={book.status ? book.status : "none"} onChange={(e) => bookShelfHandler(book, e.target.value)}>
+          <select defaultValue={book?.status ? book?.status : "none"} onChange={(e) => bookShelfHandler(book, e.target.value)}>
             <option value="none" disabled>
               Move to...
             </option>
@@ -32,10 +34,9 @@ const Book = ({ book, bookShelfHandler }: data) => {
           </select>
         </div>
       </div>
-      <div className={`${styles.bookTitle}`}>{book.title}</div>
-      <div className={`${styles.bookAuthors}`}>{book.authors}</div>
+      <div className={`${styles.bookTitle}`}>{book?.title}</div>
+      <div className={`${styles.bookAuthors}`}>{book?.authors}</div>
     </div>
   );
 };
-
 export default Book;

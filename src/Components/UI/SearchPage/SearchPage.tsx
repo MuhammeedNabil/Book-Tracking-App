@@ -14,6 +14,7 @@ interface bookData {
 const SearchPage = () => {
   const [query, setQuery] = useState("");
   const [foundedBooks, setFoundedBooks] = useState<bookData[]>([]);
+  // const { bookShelfHandler }: any = BookContext();
 
   useEffect(() => {
     let isAllNameIsGet = true;
@@ -36,14 +37,6 @@ const SearchPage = () => {
 
   // ---------------------Handler function to update the shelf of the book-------------------
   const bookShelfHandler = (book: bookData, whichShelf: string) => {
-    const updatedBooks: bookData[] = foundedBooks.map((b: bookData) => {
-      if (b.id === book.id) {
-        book.shelf = whichShelf;
-        return book;
-      }
-      return b;
-    });
-    setFoundedBooks(updatedBooks);
     booksAPI.update(book, whichShelf).then((data) => data);
   };
   // ---------------------------------------------------------------------------------------

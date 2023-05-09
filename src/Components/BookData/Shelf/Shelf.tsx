@@ -1,30 +1,41 @@
 import styles from "./Shelf.module.css";
 import Book from "../Book/Book";
-import { bookData } from '../../UI/Home/Home'
+import { section, BookContext, bookData, IntialData } from "../../UI/Home/Home";
 
 interface data {
-  sectionName: string;
-  books: bookData[];
-  bookShelfHandler: any
+  sections?: section[];
+  bookShelfHandler?: any;
+  book?: bookData;
 }
 
-const Shelf = ({ sectionName, books, bookShelfHandler }: data) => {
+const Shelf = () => {
+  const { sections, bookShelfHandler }: data = BookContext();
   return (
+    <div className={`${styles.bookshelf}`}>
+      {sections?.map((section) => (
+        <>
+          <h2 className={`${styles.bookshelfTitle}`}>
+            {section.sectionName}
+          </h2>
+          <div className={`${styles.bookshelfBooks}`}>
+            <ol className={`${styles.booksGrid}`}>
+              {(section.books && section.books.length) ?
+              section.books.map((b: bookData) => (
+                <IntialData.Provider value={
+           
+                {  book:b}
+                }>
+                <li key={b.id}>
+                  <Book book={b} bookShelfHandler={bookShelfHandler} />
+                </li>
 
-<div className={`${styles.bookshelf}`}>
-      <h2 className={`${styles.bookshelfTitle}`}>{sectionName}</h2>
-      <div className={`${styles.bookshelfBooks}`}>
-        <ol className={`${styles.booksGrid}`}>
-          {books.map((b: bookData) => (
-            <li key={b.id}>
-              <Book book={b} bookShelfHandler={bookShelfHandler}/>
-            </li>
-          ))}
-        </ol>
-      </div>
+                </IntialData.Provider>
+              )): <span>There are no books added yet.</span>}
+            </ol>
+          </div>
+        </>
+      ))}
     </div>
-
   );
 };
-
 export default Shelf;

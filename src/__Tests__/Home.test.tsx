@@ -1,4 +1,4 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 import Home from "../Components/UI/Home/Home";
 import LogInPage from "../Components/Custom Components/LogInPage/LogInPage";
@@ -6,7 +6,6 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import SearchPage from "../Components/UI/SearchPage/SearchPage";
-import { bookData } from '../Components/UI/Home/Home'
 
 
 
@@ -22,7 +21,7 @@ function wrapper({ children }: PropsWithChildren<unknown>) {
 }
 
 describe("Routing from home to login page", () => {
-  test("login Route", async () => {
+  it("login Route", async () => {
     render(
       <Routes>
         <Route path="/" element={<Home />} />
@@ -34,7 +33,7 @@ describe("Routing from home to login page", () => {
     await screen.findByText("Login");
   });
 
-  test("search Route", async () => {
+  it("search Route", async () => {
     render(
       <Routes>
         <Route path="/" element={<Home />} />
@@ -47,3 +46,37 @@ describe("Routing from home to login page", () => {
   });
 });
 
+// describe('Searching for my reading word',  () => {
+//   test.only('my Reading', async ()=>{
+//     render(<Home/>)
+//     await screen.findByTestId("homeTitle");
+
+//     // const readingElments = screen.getByTestId('homeTitle')
+//     // expect(readingElments.innerHTML).toHaveTextContent('MyReads')
+//   })
+// })
+
+
+
+describe('fetch fuction and display on shelf', ()=>{
+  // test('render getAll Books', async () => {
+  // const mockResponce: book={
+  //     status:200,
+  //     headers:'connect',
+  //     ok: true,
+  //     redirected: true,
+  //     statusText: '',
+  //     json: () => Promise.resolve({id:1,title:'Book 1'})
+  //   }
+  //   jest.spyOn(global,'fetch').mockResolvedValue({
+  //     json: jest.fn().mockResolvedValue(mockResponce),
+  //   });
+  //   render(<Shelf />);
+  //   const bookItems = await screen.findAllByRole('listitem');
+  //     expect(bookItems).toHaveLength(3);
+
+  //     expect(bookItems[0]).toHaveTextContent('Book 1');
+  //       global.fetch.mockRestore();
+  // });
+
+});
